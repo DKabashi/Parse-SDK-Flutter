@@ -39,6 +39,28 @@ class ParseDioClient extends ParseClient {
   }
 
   @override
+  Future<ParseNetworkResponse> getWithData(String path,
+      {String? data, ParseNetworkOptions? options}) async {
+    try {
+      final dio.Response<String> dioResponse = await _client.get<String>(
+        path,
+        data: data,
+        options: _Options(headers: options?.headers),
+      );
+
+      return ParseNetworkResponse(
+        data: dioResponse.data!,
+        statusCode: dioResponse.statusCode!,
+      );
+    } on dio.DioException catch (error) {
+      return ParseNetworkResponse(
+        data: error.response?.data ?? _fallbackErrorData,
+        statusCode: error.response?.statusCode ?? ParseError.otherCause,
+      );
+    }
+  }
+
+  @override
   Future<ParseNetworkByteResponse> getBytes(
     String path, {
     ParseNetworkOptions? options,

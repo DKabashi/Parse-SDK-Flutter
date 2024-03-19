@@ -10,6 +10,13 @@ abstract class ParseClient {
     ProgressCallback? onReceiveProgress,
   });
 
+  Future<ParseNetworkResponse> getWithData(
+    String path, {
+    String? data,
+    ParseNetworkOptions? options,
+  });
+
+
   Future<ParseNetworkResponse> put(
     String path, {
     String? data,

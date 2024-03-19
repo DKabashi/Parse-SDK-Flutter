@@ -211,7 +211,7 @@ class ParseUser extends ParseObject implements ParseCloneable {
   /// provided, call this method to login.
   /// Set [doNotSendInstallationID] to 'true' in order to prevent the SDK from sending the installationID to the Server.
   /// This option is especially useful if you are running you application on web and you don't have permission to set 'X-Parse-Installation-Id' as an allowed header on your parse-server.
-  Future<ParseResponse> login({bool doNotSendInstallationID = false}) async {
+ Future<ParseResponse> login({bool doNotSendInstallationID = false}) async {
     forgetLocalSession();
 
     try {
@@ -222,7 +222,7 @@ class ParseUser extends ParseObject implements ParseCloneable {
       final String? installationId = await _getInstallationId();
       final Uri url = getSanitisedUri(_client, keyEndPointLogin);
       _saveChanges();
-      final ParseNetworkResponse response = await _client.post(
+      final ParseNetworkResponse response = await _client.getWithData(
         url.toString(),
         data: jsonEncode(queryParams),
         options: ParseNetworkOptions(headers: <String, String>{

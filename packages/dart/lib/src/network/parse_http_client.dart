@@ -37,6 +37,21 @@ class ParseHTTPClient extends ParseClient {
         data: response.body, statusCode: response.statusCode);
   }
 
+     @override
+  Future<ParseNetworkResponse> getWithData(
+    String path, {
+    String? data,
+    ParseNetworkOptions? options,
+  }) async {
+    final http.Response response = await _client.getWithData(
+      Uri.parse(path),
+      body: data,
+      headers: options?.headers,
+    );
+    return ParseNetworkResponse(
+        data: response.body, statusCode: response.statusCode);
+  }
+
   @override
   Future<ParseNetworkByteResponse> getBytes(
     String path, {
